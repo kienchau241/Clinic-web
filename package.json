@@ -1,0 +1,27 @@
+{
+  "name": "clinic-web",
+  "version": "1.0.0",
+  "description": "a web for clinic",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kienchau241/Clinic-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kienchau241/Clinic-web/issues"
+  },
+  "homepage": "https://github.com/kienchau241/Clinic-web#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mssql": "^9.1.1",
+    "tedious": "^15.1.3"
+  }
+}
