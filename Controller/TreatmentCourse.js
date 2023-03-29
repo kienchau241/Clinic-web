@@ -9,6 +9,7 @@ const TreatmentCourseDAO = require("../DAO/TreatmentCourseDAO");
 //     }
 // }
 
+//CRUD operation
 exports.getAllCourses = async (res, req) => {
   try {
     const { page, pageSize, totalPage, totalItem, TreatmentCourses } =
@@ -24,6 +25,19 @@ exports.getAllCourses = async (res, req) => {
     });
   } catch (e) {
     console.error(e);
+    res.status(500).json({
+      code: 500,
+      msg: e.toString(),
+    });
+  }
+};
+
+exports.createCourse = async (res, req) => {
+  try {
+    await TreatmentCourseDAO.createCourse(newcourse);
+    let course = await TreatmentCourseDAO.getCoursebyID;
+  } catch (e) {
+    console.log(e);
     res.status(500).json({
       code: 500,
       msg: e.toString(),

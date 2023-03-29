@@ -58,3 +58,177 @@ exports.getallCourse = async function (filter) {
     TreatmentCourses: TreatmentCourses,
   };
 };
+
+exports.getCoursebyID = async function (id) {
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+
+  let request = dbConfig.db.pool.request();
+  let result = await request
+    .input(
+      TreatmentCSchema.schema.id.name,
+      TreatmentCSchema.schema.id.sqlType,
+      id
+    )
+    .query(
+      `select * from ${TreatmentCSchema.schemaName} where ${TreatmentCSchema.schema.id.name} = @${TreatmentCSchema.schema.id.name}`
+    );
+  let course = result.recordsets[0][0];
+  // console.log(result);
+  return course;
+};
+
+exports.getCourseByName = async (name) => {
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+  let request = dbConfig.db.pool.request();
+  let result = await request
+    .input(
+      TreatmentCSchema.schema.name.name,
+      TreatmentCSchema.schema.name.sqlType,
+      name
+    )
+    .query(
+      `select * from ${TreatmentCSchema.schemaName} where ${TreatmentCSchema.schema.name.name} = @${TreatmentCSchema.schema.name.name}`
+    );
+  // console.log(result);
+  return result.recordsets[0][0];
+};
+
+exports.deleteCourseById = async (id) => {
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+  let request = dbConfig.db.pool.request();
+  let result = await request
+    .input(
+      TreatmentCSchema.schema.id.name,
+      TreatmentCSchema.schema.id.sqlType,
+      id
+    )
+    .query(
+      `delete ${TreatmentCSchema.schemaName} where ${TreatmentCSchema.schema.id.name} = @${TreatmentCSchema.schema.id.name}`
+    );
+
+  // console.log(result);
+  return result.recordsets;
+};
+
+exports.updateCourseById = async (id, updateInfo) => {
+  // update Tours
+  // set  name = 'Tours 3',
+  //     price = 200,
+  //     rating = 4.5
+  // where Id = 2
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+  if (!updateInfo) {
+    throw new Error("Invalid input param");
+  }
+  let query = `update ${TreatmentCSchema.schemaName} set`;
+  // 'update Tour set name = @name, ratingsAverage = @ratingsAverage, price = @price where id = @id';
+
+  const { request, updateStr } = dbUtils.getUpdateQuery(
+    TreatmentCSchema.schema,
+    dbConfig.db.pool.request(),
+    updateInfo
+  );
+  if (!updateStr) {
+    throw new Error("Invalid update param");
+  }
+  request.input(
+    TreatmentCSchema.schema.id.name,
+    TreatmentCSchema.schema.id.sqlType,
+    id
+  );
+  query +=
+    " " +
+    updateStr +
+    ` where ${TreatmentCSchema.schema.id.name} = @${TreatmentCSchema.schema.id.name}`;
+  console.log(query);
+  let result = await request.query(query);
+  // console.log(result);
+  return result.recordsets;
+};
+
+exports.createCourse = async function (course) {
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+  if (!tour) {
+    throw new Error("Invalid input param");
+  }
+  let now = new Date();
+  course.createAt = now.toISOString();
+  let insertdata = TreatmentCSchema.validateData(course);
+  let query = `insert into ${TreatmentCSchema.schemaName}`;
+  const { request, insertFieldNamesStr, insertValuesStr } =
+    dbUtils.getInsertQuery(
+      TreatmentCSchema.schema,
+      dbConfig.db.pool.request(),
+      insertdata
+    );
+  if (!insertFieldNamesStr || !insertValuesStr) {
+    throw new Error("Invalid insert param");
+  }
+
+  query +=
+    " (" +
+    insertFieldNamesStr +
+    ") select " +
+    insertValuesStr +
+    ` WHERE NOT EXISTS(SELECT * FROM ${TreatmentCSchema.schemaName} WHERE name = @name)` +
+    ` SET IDENTITY_INSERT ${TreatmentCSchema.schemaName} OFF`;
+  // console.log(query);
+  let result = await request.query(query);
+  return result.recordsets;
+};
+
+exports.addCourseIfNotExisted = async (tour) => {
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+  let now = new Date();
+  tour.createdAt = now.toISOString();
+  let insertData = TreatmentCSchema.validateData(tour);
+
+  let query = `SET IDENTITY_INSERT ${TreatmentCSchema.schemaName} ON insert into ${TreatmentCSchema.schemaName}`;
+
+  const { request, insertFieldNamesStr, insertValuesStr } =
+    dbUtils.getInsertQuery(
+      TreatmentCSchema.schema,
+      dbConfig.db.pool.request(),
+      insertData
+    );
+  if (!insertFieldNamesStr || !insertValuesStr) {
+    throw new Error("Invalid insert param");
+  }
+
+  query +=
+    " (" +
+    insertFieldNamesStr +
+    ") select " +
+    insertValuesStr +
+    ` WHERE NOT EXISTS(SELECT * FROM ${TreatmentCSchema.schemaName} WHERE name = @name)` +
+    ` SET IDENTITY_INSERT ${TreatmentCSchema.schemaName} OFF`;
+  // console.log(query);
+
+  let result = await request.query(query);
+
+  // console.log(result);
+  return result.recordsets;
+};
+
+exports.clearAll = async () => {
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+  let result = await dbConfig.db.pool
+    .request()
+    .query(`delete ${TreatmentCSchema.schemaName}`);
+  // console.log(result);
+  return result.recordsets;
+};
