@@ -6,4 +6,6 @@ const StaticData = require("../utils/StaticData");
 router.route("/").get(courseController.getAllCourses);
 //.post(courseController.)
 
+router.route("/:id").patch(courseController.updateCourse);
+
 module.exports = router;
