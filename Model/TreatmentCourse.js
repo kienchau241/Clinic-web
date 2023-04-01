@@ -21,6 +21,22 @@ const TreatmentCSchema = new ModelSchema({
       return val >= 0;
     },
   }),
+  ratingsAverage: new ModelSchemaValidator({
+    name: "ratingsAverage",
+    sqlType: sql.Float,
+    default: 4.5,
+    validator: function (val) {
+      return val >= 0 && val <= 5;
+    },
+  }),
+  ratingsQuantity: new ModelSchemaValidator({
+    name: "ratingsQuantity",
+    sqlType: sql.Int,
+    default: 0,
+    validator: function (val) {
+      return val >= 0;
+    },
+  }),
   price: new ModelSchemaValidator({
     name: "price",
     sqlType: sql.Int,
@@ -32,11 +48,6 @@ const TreatmentCSchema = new ModelSchema({
   createdAt: new ModelSchemaValidator({
     name: "createdAt",
     sqlType: sql.DateTime,
-    require: true,
-  }),
-  reviewID: new ModelSchemaValidator({
-    name: "reviewID",
-    sqlType: sql.Int,
     require: true,
   }),
   idDis: new ModelSchemaValidator({
