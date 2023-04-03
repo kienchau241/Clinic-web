@@ -9,7 +9,7 @@ exports.getallCourse = async function (filter) {
     throw new Error("Not connected to db");
   }
 
-  let query = `select * from ${TreatmentCSchema.schema}`;
+  let query = `select * from ${TreatmentCSchema.schemaName}`;
   let countQuery = `SELECT COUNT(DISTINCT ${TreatmentCSchema.schema.id.name}) as totalItem from ${TreatmentCSchema.schemaName}`;
 
   const page = filter.page * 1 || 1;
@@ -34,9 +34,9 @@ exports.getallCourse = async function (filter) {
   if (paginationStr) {
     query += " " + paginationStr;
   }
-  // console.log(query);
-  const result = await dbConfig.db.pool.request().query(query);
-  let countResult = await dbConfig.db.pool.request().query(countQuery);
+  console.log(query);
+  const result = await dbconfig.db.pool.request().query(query);
+  let countResult = await dbconfig.db.pool.request().query(countQuery);
 
   let totalItem = 0;
   if (countResult.recordsets[0].length > 0) {
@@ -45,10 +45,10 @@ exports.getallCourse = async function (filter) {
   let totalPage = Math.ceil(totalItem / pageSize); //round up
 
   const TreatmentCourses = result.recordsets[0];
-  for (let i = 0; i < TreatmentCourses.length; i++) {
-    const TreatmentCourse = TreatmentCourses[i];
-    await setTourInfo(TreatmentCourse);
-  }
+  // for (let i = 0; i < TreatmentCourses.length; i++) {
+  //   const TreatmentCourse = TreatmentCourses[i];
+  //   await setTourInfo(TreatmentCourse);
+  // }
 
   return {
     page,
@@ -60,11 +60,11 @@ exports.getallCourse = async function (filter) {
 };
 
 exports.getCoursebyID = async function (id) {
-  if (!dbConfig.db.pool) {
+  if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
 
-  let request = dbConfig.db.pool.request();
+  let request = dbconfig.db.pool.request();
   let result = await request
     .input(
       TreatmentCSchema.schema.id.name,
@@ -80,10 +80,10 @@ exports.getCoursebyID = async function (id) {
 };
 
 exports.getCourseByName = async (name) => {
-  if (!dbConfig.db.pool) {
+  if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
-  let request = dbConfig.db.pool.request();
+  let request = dbconfig.db.pool.request();
   let result = await request
     .input(
       TreatmentCSchema.schema.name.name,
@@ -98,10 +98,10 @@ exports.getCourseByName = async (name) => {
 };
 
 exports.deleteCourseById = async (id) => {
-  if (!dbConfig.db.pool) {
+  if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
-  let request = dbConfig.db.pool.request();
+  let request = dbconfig.db.pool.request();
   let result = await request
     .input(
       TreatmentCSchema.schema.id.name,
@@ -122,7 +122,7 @@ exports.updateCourseById = async (id, updateInfo) => {
   //     price = 200,
   //     rating = 4.5
   // where Id = 2
-  if (!dbConfig.db.pool) {
+  if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
   if (!updateInfo) {
@@ -133,7 +133,7 @@ exports.updateCourseById = async (id, updateInfo) => {
 
   const { request, updateStr } = dbUtils.getUpdateQuery(
     TreatmentCSchema.schema,
-    dbConfig.db.pool.request(),
+    dbconfig.db.pool.request(),
     updateInfo
   );
   if (!updateStr) {
@@ -155,10 +155,10 @@ exports.updateCourseById = async (id, updateInfo) => {
 };
 
 exports.createCourse = async function (course) {
-  if (!dbConfig.db.pool) {
+  if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
-  if (!tour) {
+  if (!course) {
     throw new Error("Invalid input param");
   }
   let now = new Date();
@@ -168,7 +168,7 @@ exports.createCourse = async function (course) {
   const { request, insertFieldNamesStr, insertValuesStr } =
     dbUtils.getInsertQuery(
       TreatmentCSchema.schema,
-      dbConfig.db.pool.request(),
+      dbconfig.db.pool.request(),
       insertdata
     );
   if (!insertFieldNamesStr || !insertValuesStr) {
@@ -188,7 +188,7 @@ exports.createCourse = async function (course) {
 };
 
 exports.addCourseIfNotExisted = async (tour) => {
-  if (!dbConfig.db.pool) {
+  if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
   let now = new Date();
@@ -200,7 +200,7 @@ exports.addCourseIfNotExisted = async (tour) => {
   const { request, insertFieldNamesStr, insertValuesStr } =
     dbUtils.getInsertQuery(
       TreatmentCSchema.schema,
-      dbConfig.db.pool.request(),
+      dbconfig.db.pool.request(),
       insertData
     );
   if (!insertFieldNamesStr || !insertValuesStr) {
@@ -223,10 +223,10 @@ exports.addCourseIfNotExisted = async (tour) => {
 };
 
 exports.clearAll = async () => {
-  if (!dbConfig.db.pool) {
+  if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
-  let result = await dbConfig.db.pool
+  let result = await dbconfig.db.pool
     .request()
     .query(`delete ${TreatmentCSchema.schemaName}`);
   // console.log(result);

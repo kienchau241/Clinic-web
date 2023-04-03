@@ -29,6 +29,7 @@ class ModelSchemaValidator {
   }
 
   validate(val) {
+    console.log("validate");
     if (val === undefined || val === null) {
       val = this.default;
     }
@@ -54,6 +55,7 @@ class ModelSchemaValidator {
     }
 
     if (this.validator && !this.validator(val)) {
+      console.log(this.validator);
       return {
         isValid: false,
         err: "validator check failed",

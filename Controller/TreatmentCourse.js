@@ -26,8 +26,10 @@ exports.checkTreatmentCourseById = async (req, res, next, val) => {
 //CRUD operation
 exports.getAllCourses = async (req, res) => {
   try {
+    console.log("getAllCourses");
     const { page, pageSize, totalPage, totalItem, TreatmentCourses } =
-      await TreatmentCourseDAO.getallCourse(req, query);
+      await TreatmentCourseDAO.getallCourse(req.query);
+    console.log(req.query);
     res.status(200).json({
       code: 200,
       msg: "Ok",
@@ -47,6 +49,7 @@ exports.getAllCourses = async (req, res) => {
 };
 
 exports.createCourse = async (req, res) => {
+  const newcourse = req.body;
   try {
     await TreatmentCourseDAO.createCourse(newcourse);
     let course = await TreatmentCourseDAO.getCoursebyID;
