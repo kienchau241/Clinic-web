@@ -3,9 +3,17 @@ const router = express.Router();
 const courseController = require("../Controller/TreatmentCourse");
 const StaticData = require("../utils/StaticData");
 
-router.route("/").get(courseController.getAllCourses);
-//.post(courseController.)
+router.param("id", courseController.checkTreatmentCourseById);
 
-router.route("/:id").patch(courseController.updateCourse);
+router
+  .route("/")
+  .get(courseController.getAllCourses)
+  .post(courseController.createCourse);
+
+router
+  .route("/:id")
+  .patch(courseController.updateCourse)
+  .get(courseController.getCoursebyID)
+  .delete(courseController.deleteCourse);
 
 module.exports = router;

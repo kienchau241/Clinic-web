@@ -26,8 +26,10 @@ exports.checkTreatmentCourseById = async (req, res, next, val) => {
 //CRUD operation
 exports.getAllCourses = async (req, res) => {
   try {
+    console.log("getAllCourses");
     const { page, pageSize, totalPage, totalItem, TreatmentCourses } =
-      await TreatmentCourseDAO.getallCourse(req, query);
+      await TreatmentCourseDAO.getallCourse(req.query);
+    console.log(req.query);
     res.status(200).json({
       code: 200,
       msg: "Ok",
@@ -47,6 +49,7 @@ exports.getAllCourses = async (req, res) => {
 };
 
 exports.createCourse = async (req, res) => {
+  const newcourse = req.body;
   try {
     await TreatmentCourseDAO.createCourse(newcourse);
     let course = await TreatmentCourseDAO.getCoursebyID;
@@ -69,12 +72,16 @@ exports.createCourse = async (req, res) => {
 
 exports.updateCourse = async (req, res) => {
   try {
+    const id = req.params.id * 1;
+    const updateInfo = req.body;
+    await TreatmentCourseDAO.updateCourseById(id, updateInfo);
+    const course = await TreatmentCourseDAO.getCoursebyID(id);
     console.log(req.body);
     return res.status(200).json({
       code: 200,
-      msg: `Update tour with id: ${id} successfully!`,
+      msg: `Update course with id: ${id} successfully!`,
       data: {
-        tour,
+        course,
       },
     });
   } catch (e) {
@@ -85,5 +92,40 @@ exports.updateCourse = async (req, res) => {
         code: 500,
         msg: e.toString(),
       });
+  }
+};
+
+exports.deleteCourse = async (req, res) => {
+  try {
+    const id = req.params.id * 1;
+    await TreatmentCourseDAO.deleteCourseById(id);
+    return res.status(200).json({
+      cose: 200,
+      msg: `Delete course with id ${id} success`,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      cose: 500,
+      msg: e.toString(),
+    });
+  }
+};
+
+exports.getCoursebyID = async (req, res) => {
+  try {
+    const id = req.params.id * 1;
+    const course = await TreatmentCourseDAO.getCoursebyID(id);
+    return res.status(200).json({
+      code: 200,
+      msg: "success",
+      data: {
+        course,
+      },
+    });
+  } catch (e) {
+    return res.status(500).json({
+      code: 500,
+      msg: e.toString(),
+    });
   }
 };

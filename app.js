@@ -12,8 +12,15 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.use("/", (req, res) => {
+//   res.status(200).json({
+//     code: 200,
+//     msg: "1234",
+//   });
+// });
+
 const courseRoute = require("./Route/TreatmentCourse");
 
-app.use("/api/v1/coures", courseRoute);
+app.use("/api/v1/courses", courseRoute);
 
 module.exports = app;

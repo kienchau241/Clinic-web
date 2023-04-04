@@ -32,9 +32,7 @@ create table TreatmentCourse(
 	createdAt	datetime default CURRENT_TIMESTAMP not null,	
 )
 
-INsert into TreatmentCourse
-values
-(1,'xa tri', 'des cua course',4.5,100,500000,'20120618 10:34:09 AM')
+
 
 create table Reviews	
 (
@@ -83,6 +81,14 @@ create table Appointment(
 	Doctorid	int foreign key references Users(id)   not null,
 	AppTime		datetime default CURRENT_TIMESTAMP not null	
 )
+
+INsert into TreatmentCourse
+values
+('xa tri', 'des cua course',4.5,100,500000,'20120618 10:34:09 AM', 1)
+
+select * from Diseases
+select * from TreatmentCourse
+
 
 
 
