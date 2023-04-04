@@ -19,7 +19,7 @@ const TreatmentCSchema = new ModelSchema(
       sqlType: sql.VarChar,
       require: true,
       validator: function (val) {
-        return val >= 0;
+        return val.length >= 0;
       },
     }),
     ratingsAverage: new ModelSchemaValidator({
@@ -49,6 +49,7 @@ const TreatmentCSchema = new ModelSchema(
     createdAt: new ModelSchemaValidator({
       name: "createdAt",
       sqlType: sql.DateTime,
+      default: 0,
       require: true,
     }),
     idDis: new ModelSchemaValidator({

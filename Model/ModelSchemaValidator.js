@@ -23,13 +23,13 @@ class ModelSchemaValidator {
       this.default = config.default;
     }
 
-    if (config.validator) {
-      this.validator = config.validator;
-    }
+    // if (config.validator) {
+    //   this.validator = config.validator;
+    // }
   }
 
   validate(val) {
-    console.log("validate");
+    console.log(val);
     if (val === undefined || val === null) {
       val = this.default;
     }
@@ -55,7 +55,7 @@ class ModelSchemaValidator {
     }
 
     if (this.validator && !this.validator(val)) {
-      console.log(this.validator);
+      //console.log(this.validator && !this.validator(val));
       return {
         isValid: false,
         err: "validator check failed",

@@ -10,6 +10,10 @@ router
   .get(courseController.getAllCourses)
   .post(courseController.createCourse);
 
-router.route("/:id").patch(courseController.updateCourse);
+router
+  .route("/:id")
+  .patch(courseController.updateCourse)
+  .get(courseController.getCoursebyID)
+  .delete(courseController.deleteCourse);
 
 module.exports = router;

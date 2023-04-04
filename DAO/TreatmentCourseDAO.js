@@ -34,7 +34,7 @@ exports.getallCourse = async function (filter) {
   if (paginationStr) {
     query += " " + paginationStr;
   }
-  console.log(query);
+  //console.log(query);
   const result = await dbconfig.db.pool.request().query(query);
   let countResult = await dbconfig.db.pool.request().query(countQuery);
 
