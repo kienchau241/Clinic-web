@@ -1,93 +1,103 @@
-create database ClinicWeb
+CREATE DATABASE ClinicWeb
 
-create table Role(
-	id		int primary key,
-	name	varchar(10)
+USE ClinicWeb
+
+-- CREATE TABLE
+CREATE TABLE Role(
+	id		INT PRIMARY KEY  ,
+	name	VARCHAR(10)
 )
 
-insert into Role (id,name)
-values
+CREATE TABLE Users(
+	id INT identity (1,1) PRIMARY KEY      NOT NULL,
+	username	VARCHAR(100) NOT NULL,
+	email		VARCHAR(100) NOT NULL,
+	password	VARCHAR(100) NOT NULL,
+	passwordAt	VARCHAR(100) NOT NULL,
+	photo		VARCHAR(300) NOT NULL,
+	role		INT FOREIGN KEY REFERENCES Role(id) default 1 NOT NULL,
+	createdAt	DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+)
+
+CREATE TABLE TreatmentCourse(
+	id              INT identity (1,1) PRIMARY KEY      NOT NULL,
+	name		VARCHAR(50) NOT NULL, 
+	description	VARCHAR(max) NOT NULL,
+	ratingsAverage  FLOAT default 4.5 CHECK (RatingsAverage >= 0 AND ratingsAverage <= 5),
+    ratingsQuantity INT default 0 CHECK (RatingsQuantity >= 0),
+	price		INT NOT NULL,
+	createdAt	DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,	
+)
+
+CREATE TABLE Reviews	
+(
+    id			INT identity (1,1) PRIMARY KEY             NOT NULL,
+    review		VARCHAR(max)                              NOT NULL,
+    rating		INT CHECK (rating >= 0 AND rating <= 5),
+    TreatmentId    INT FOREIGN KEY REFERENCES TreatmentCourse(id) not  null,
+    userId		INT FOREIGN KEY REFERENCES Users(id) NOT NULL,
+    createdAt	DATETIME DEFAULT CURRENT_TIMESTAMP        NOT NULL,
+)
+
+CREATE TABLE Diseases(
+	idDis		INT identity (1,1) PRIMARY KEY      NOT NULL,
+	nameDis		VARCHAR(100) NOT NULL,
+	Cause		VARCHAR(300) NOT NULL,
+	Conditions	VARCHAR(300) NOT NULL,
+)
+
+CREATE TABLE TreatmentProcess(
+	UserId	INT FOREIGN KEY REFERENCES Users(id),
+	TreatmentCourseId	INT FOREIGN KEY REFERENCES TreatmentCourse(id),
+) 
+
+CREATE TABLE post(
+	id INT identity (1,1) PRIMARY KEY      NOT NULL,
+	title VARCHAR(200) NOT NULL,
+	content VARCHAR(max)   NOT NULL,
+	UserId	INT FOREIGN KEY REFERENCES Users(id)   NOT NULL,
+	postTime	DATETIME DEFAULT CURRENT_TIMESTAMP        NOT NULL	
+)
+
+CREATE TABLE Appointment(
+	idApp	INT identity (1,1) PRIMARY KEY ,
+	PatientId	INT FOREIGN KEY REFERENCES Users(id)   NOT NULL,
+	Doctorid	INT FOREIGN KEY REFERENCES Users(id)   NOT NULL,
+	AppTime		DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL	
+)
+
+-- ALTER TABLE 
+ALTER TABLE TreatmentCourse
+    ADD idDis INT,
+    FOREIGN KEY(idDis) REFERENCES Diseases(idDis)
+
+-- INSERT DATA
+INSERT INTO Role (id,name)
+VALUES
 (1, 'Patient'),
 (2, 'Doctor'),
 (3, 'Admin')
 
-create table Users(
-	id int identity (1,1) primary key     not null,
-	username	varchar(100) not null,
-	email		varchar(100) not null,
-	password	varchar(100) not null,
-	passwordAt	varchar(100) not null,
-	photo		varchar(300) not null,
-	role		int foreign key references Role(id) default 1 not null,
-	createdAt	Datetime default CURRENT_TIMESTAMP not null
-)
-
-create table TreatmentCourse(
-	id              int identity (1,1) primary key     not null,
-	name		varchar(50) not null, 
-	description	varchar(max) not null,
-	ratingsAverage  float default 4.5 CHECK (RatingsAverage >= 0 AND ratingsAverage <= 5),
-    ratingsQuantity int default 0 CHECK (RatingsQuantity >= 0),
-	price		int not null,
-	createdAt	datetime default CURRENT_TIMESTAMP not null,	
-)
-
-
-
-create table Reviews	
-(
-    id			int identity (1,1) primary key            not null,
-    review		varchar(max)                              not null,
-    rating		int CHECK (rating >= 0 AND rating <= 5),
-    TreatmentId    int foreign key references TreatmentCourse(id) not  null,
-    userId		int foreign key references Users(id) not null,
-    createdAt	datetime default CURRENT_TIMESTAMP        not null,
-)
-
-
-create table Diseases(
-	idDis		int identity (1,1) primary key     not null,
-	nameDis		varchar(100) not null,
-	Cause		varchar(300) not null,
-	Conditions	varchar(300) not null,
-)
-
-insert into Diseases
-values
+INSERT INTO Diseases
+VALUES
 ('Ung thu Phoi', 'hut thuoc, o nhiem khong khi', 'ho ra mau')
 
-select * from Diseases
-
-ALTER TABLE TreatmentCourse
-    ADD idDis int,
-    FOREIGN KEY(idDis) REFERENCES Diseases(idDis);
-
-create table TreatmentProcess(
-	UserId	int foreign key references Users(id),
-	TreatmentCourseId	int foreign key references TreatmentCourse(id),
-) 
-
-create table post(
-	id int identity (1,1) primary key     not null,
-	title varchar(200) not null,
-	content varchar(max)   not null,
-	UserId	int foreign key references Users(id)   not null,
-	postTime	datetime default CURRENT_TIMESTAMP        not null	
-)
-
-create table Appointment(
-	idApp	int identity (1,1) primary key,
-	PatientId	int foreign key references Users(id)   not null,
-	Doctorid	int foreign key references Users(id)   not null,
-	AppTime		datetime default CURRENT_TIMESTAMP not null	
-)
-
-INsert into TreatmentCourse
-values
+INSERT INTO TreatmentCourse
+VALUES
 ('xa tri', 'des cua course',4.5,100,500000,'20120618 10:34:09 AM', 1)
 
-select * from Diseases
-select * from TreatmentCourse
+-- ALREADY HAVE DATA
+SELECT * FROM dbo.Role
+SELECT * FROM dbo.Diseases
+SELECT * FROM dbo.TreatmentCourse
+
+-- DO NOT HAVE DATA YET
+SELECT * FROM dbo.Users
+SELECT * FROM dbo.Reviews
+SELECT * FROM dbo.TreatmentProcess
+SELECT * FROM dbo.post
+SELECT * FROM dbo.Appointment
+
 
 
 
