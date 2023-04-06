@@ -17,19 +17,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use("/", (req, res) => {
-//   res.status(200).json({
-//     code: 200,
-//     msg: "1234",
-//   });
-// });
-
 // app.get("/", (req, res) => {
 //   res.render("home");
 // });
 
 const courseRoute = require("./Routes/TreatmentCourse");
+const userRoute = require("./Routes/User");
 
 app.use("/api/v1/courses", courseRoute);
+app.use("/api/v1/user", userRoute);
 
 module.exports = app;

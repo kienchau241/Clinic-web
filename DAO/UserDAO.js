@@ -1,5 +1,5 @@
 const dbConfig = require("./../database/dbconfig");
-const dbUtils = require("../utils/dbUtils");
+const dbUtils = require("../utils/dbutils");
 const UserSchema = require("../Model/User");
 const StaticData = require("../utils/StaticData");
 const bcrypt = require("bcryptjs");

@@ -26,11 +26,6 @@ const UserSchema = new ModelSchema(
           );
       },
     }),
-    name: new ModelSchemaValidator({
-      name: "name",
-      sqlType: sql.VarChar,
-      require: true,
-    }),
     password: new ModelSchemaValidator({
       name: "password",
       sqlType: sql.VarChar,
