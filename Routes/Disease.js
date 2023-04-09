@@ -15,6 +15,8 @@ router
     DisController.addDis
   );
 
+router.route("/:slug").get(DisController.GetDisbyName);
+
 router
   .route("/:id")
   .delete(
@@ -33,3 +35,5 @@ router
     ),
     DisController.updateCourse
   );
+
+module.exports = router;

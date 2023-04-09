@@ -23,8 +23,26 @@ exports.CheckDisbyId = async (req, res, next, val) => {
   next();
 };
 
+exports.GetDisbyName = async (req, res) => {
+  try {
+    const name = req.params;
+    console.log(name.slug);
+    let disease = await DisDAO.GetDisbyName(name.slug);
+    console.log(disease);
+    return res.status(200).json({
+      code: 200,
+      msg: disease,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      code: 500,
+      msg: e.toString(),
+    });
+  }
+};
+
 exports.addDis = async (req, res) => {
-  const newcourse = req.body;
+  const newDis = req.body;
   try {
     await DisDAO.addDis(newDis);
     let disease = await DisDAO.GetDisbyId;

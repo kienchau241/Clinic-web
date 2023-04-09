@@ -2,6 +2,7 @@ const dbConfig = require("./../database/dbconfig");
 const dbUtils = require("../utils/dbutils");
 const DiseasesSchema = require("../Model/Diseases");
 const { request } = require("express");
+const { log } = require("handlebars");
 
 exports.clearAll = async function () {
   if (!dbConfig.db.pool) {
@@ -116,7 +117,7 @@ exports.deleteDis = async function (id) {
   return result.recordsets;
 };
 
-exports.GetDisbyName = async function () {
+exports.GetDisbyName = async (name) => {
   if (!dbConfig.db.pool) {
     throw new Error("Not connect to db");
   }
@@ -124,8 +125,8 @@ exports.GetDisbyName = async function () {
   let result = await request
     .input(
       DiseasesSchema.schema.nameDis.name,
-      DiseasesSchema.schema.name.sqlType,
-      nameDis
+      DiseasesSchema.schema.nameDis.sqlType,
+      name
     )
     .query(
       `select * from ${DiseasesSchema.schemaName} where ${DiseasesSchema.schema.nameDis.name} = @${DiseasesSchema.schema.nameDis.name}`
