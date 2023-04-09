@@ -66,7 +66,6 @@ exports.signup = async (req, res) => {
     //TODO - check if username/email existed
     await UserDAO.addUser({
       userName: form.userName,
-      name: form.name,
       email: form.email,
       role: StaticData.AUTH.Role.user,
       active: true,

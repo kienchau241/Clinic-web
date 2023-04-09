@@ -17,14 +17,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/", (req, res) => {
-//   res.render("home");
-// });
+app.get("/", (req, res) => {
+  res.render("home");
+});
 
 const courseRoute = require("./Routes/TreatmentCourse");
 const userRoute = require("./Routes/User");
+const disRoute = require("./Routes/Disease");
 
 app.use("/api/v1/courses", courseRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/disease", disRoute);
 
 module.exports = app;
