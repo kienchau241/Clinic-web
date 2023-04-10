@@ -114,7 +114,7 @@ GO
 -- RESEED IDENTITY & DBCC stands for Database Consistency Checker
 DBCC CHECKIDENT ('Users', RESEED, 0)
 
--- Hide password but still not see password masked after the command works
+-- This command works, but the masking does not appear.
 ALTER TABLE [dbo].[Users]
 ALTER COLUMN password ADD MASKED WITH (FUNCTION = 'default()');
 
