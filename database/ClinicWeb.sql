@@ -71,6 +71,9 @@ ALTER TABLE TreatmentCourse
     ADD idDis INT,
     FOREIGN KEY(idDis) REFERENCES Diseases(idDis)
 
+-- ALTER DATABASE
+ALTER DATABASE ClinicWeb SET COMPATIBILITY_LEVEL = 160;
+
 -- INSERT DATA
 INSERT INTO Role (id,name)
 VALUES
@@ -86,17 +89,35 @@ INSERT INTO TreatmentCourse
 VALUES
 ('xa tri', 'des cua course',4.5,100,500000,'20120618 10:34:09 AM', 1)
 
+INSERT INTO Users
+VALUES 
+('thang045', 'thang045@gmail.com', '123456aA', '2023/06/04 08:30:50', 'https://www.shutterstock.com/image-photo/hospital-interior-operating-surgery-table-lamps-1407429638', 1, '2023/06/04 08:35:59'),
+('cgk23', 'cgk23@gmail.com', '223123aA@', '2023/06/04 08:41:20', 'https://www.shutterstock.com/image-illustration/room-equipment-clinic-dermatology-cosmetology-3d-664883989', 1, '2023/06/04 08:50:59')
+
 -- ALREADY HAVE DATA
 SELECT * FROM dbo.Role
 SELECT * FROM dbo.Diseases
 SELECT * FROM dbo.TreatmentCourse
+SELECT * FROM dbo.Users
 
 -- DO NOT HAVE DATA YET
-SELECT * FROM dbo.Users
 SELECT * FROM dbo.Reviews
 SELECT * FROM dbo.TreatmentProcess
 SELECT * FROM dbo.post
 SELECT * FROM dbo.Appointment
+
+-- DELETE DATA
+DELETE FROM Users
+WHERE 	id = 1
+GO
+
+-- RESEED IDENTITY & DBCC stands for Database Consistency Checker
+DBCC CHECKIDENT ('Users', RESEED, 0)
+
+-- Hide password but still not see password masked after the command works
+ALTER TABLE [dbo].[Users]
+ALTER COLUMN password ADD MASKED WITH (FUNCTION = 'default()');
+
 
 
 
