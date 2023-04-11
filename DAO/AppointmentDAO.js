@@ -1,4 +1,4 @@
-const dbConfig = require("./../database/dbconfig");
+const dbConfig = require("../database/dbconfig");
 const dbUtils = require("../utils/dbutils");
 const AppoinmentSchema = require("../Model/Appointment");
 
@@ -49,6 +49,26 @@ exports.GetAllApp = async function (filter) {
     totalItem,
     Appointment: Appointment,
   };
+};
+
+exports.getAppById = async function (id) {
+  if (!dbconfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+
+  let request = dbconfig.db.pool.request();
+  let result = await request
+    .input(
+      AppoinmentSchema.schema.id.name,
+      AppoinmentSchema.schema.id.sqlType,
+      id
+    )
+    .query(
+      `select * from ${AppoinmentSchema.schemaName} where ${AppoinmentSchema.schema.id.name} = @${AppoinmentSchema.schema.id.name}`
+    );
+  let course = result.recordsets[0][0];
+  // console.log(result);
+  return course;
 };
 
 exports.createNewApp = async (appointment) => {
