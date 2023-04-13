@@ -25,7 +25,7 @@ const DiseasesSchema = new ModelSchema(
     }),
   },
   "Diseases",
-  "createdAt"
+  "idDis"
 );
 
 module.exports = DiseasesSchema;

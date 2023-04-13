@@ -41,6 +41,34 @@ exports.GetDisbyName = async (req, res) => {
   }
 };
 
+exports.getAllDis = async (req, res) => {
+  try {
+    // console.log(req.query);
+    const { page, pageSize, totalPage, totalItem, diseases } =
+      await DisDAO.getAllDis(req.query);
+    // res.status(200).json({
+    //   //200 - OK
+    //   code: 200,
+    //   msg: "OK",
+    //   page,
+    //   pageSize,
+    //   totalPage,
+    //   totalItem,
+    //   data: {
+    //     diseases,
+    //   },
+    // });
+    res.render("disease", { diseases });
+  } catch (e) {
+    console.error(e);
+    res
+      .status(500) // 500 - Internal Error
+      .json({
+        code: 500,
+        msg: e.toString(),
+      });
+  }
+};
 exports.addDis = async (req, res) => {
   const newDis = req.body;
   try {
@@ -99,6 +127,24 @@ exports.deleteDis = async (req, res) => {
   } catch (e) {
     return res.status(500).json({
       cose: 500,
+      msg: e.toString(),
+    });
+  }
+};
+
+exports.getDisbyId = async (req, res) => {
+  try {
+    const id = req.params.id * 1;
+    let disease = await DisDAO.GetDisbyId(id);
+    console.log(disease);
+    // return res.status(200).json({
+    //   code: 200,
+    //   msg: disease,
+    // });
+    return res.render("./diseases/detailDis", disease);
+  } catch (e) {
+    return res.status(500).json({
+      code: 500,
       msg: e.toString(),
     });
   }

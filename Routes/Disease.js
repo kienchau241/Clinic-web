@@ -13,9 +13,10 @@ router
       StaticData.AUTH.Role.admin
     ),
     DisController.addDis
-  );
+  )
+  .get(DisController.getAllDis);
 
-router.route("/:slug").get(DisController.GetDisbyName);
+//router.route("/:slug").get(DisController.GetDisbyName);
 
 router
   .route("/:id")
@@ -34,6 +35,7 @@ router
       StaticData.AUTH.Role.admin
     ),
     DisController.updateCourse
-  );
+  )
+  .get(DisController.getDisbyId);
 
 module.exports = router;

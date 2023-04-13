@@ -30,15 +30,16 @@ exports.getAllCourses = async (req, res) => {
     const { page, pageSize, totalPage, totalItem, TreatmentCourses } =
       await TreatmentCourseDAO.getallCourse(req.query);
     console.log(req.query);
-    res.status(200).json({
-      code: 200,
-      msg: "Ok",
-      page,
-      pageSize,
-      totalPage,
-      totalItem,
-      data: { TreatmentCourses },
-    });
+    // res.status(200).json({
+    //   code: 200,
+    //   msg: "Ok",
+    //   page,
+    //   pageSize,
+    //   totalPage,
+    //   totalItem,
+    //   data: { TreatmentCourses },
+    // });
+    res.render("course", { TreatmentCourses });
   } catch (e) {
     console.error(e);
     res.status(500).json({
@@ -115,6 +116,26 @@ exports.getCoursebyID = async (req, res) => {
   try {
     const id = req.params.id * 1;
     const course = await TreatmentCourseDAO.getCoursebyID(id);
+    // return res.status(200).json({
+    //   code: 200,
+    //   msg: "success",
+    //   data: {
+    //     course,
+    //   },
+    // });
+    return res.render("./TreatmentCourse/detailCourse", course);
+  } catch (e) {
+    return res.status(500).json({
+      code: 500,
+      msg: e.toString(),
+    });
+  }
+};
+
+exports.getCoursebyName = async (req, res) => {
+  try {
+    const name = req.params.name;
+    const course = await TreatmentCourseDAO.getCourseByName(name);
     return res.status(200).json({
       code: 200,
       msg: "success",
@@ -129,3 +150,31 @@ exports.getCoursebyID = async (req, res) => {
     });
   }
 };
+
+// exports.getCourse = async (req, res) => {
+//   try {
+//     const slug = req.params.slug;
+//     if (slug === Number) {
+//       const id = req.params.id * 1;
+//       const course = await TreatmentCourseDAO.getCoursebyID(id);
+//       return res.status(200).json({
+//         code: 200,
+//         msg: "success",
+//         data: {
+//           course,
+//         },
+//       });
+//     }
+//     if (slug === String) {
+//       const name = req.params.slug;
+//       const course = await TreatmentCourseDAO.getCourseByName(name);
+//       return res.status(200).json({
+//         code: 200,
+//         msg: "success",
+//         data: {
+//           course,
+//         },
+//       });
+//     }
+//   } catch (e) {}
+// };

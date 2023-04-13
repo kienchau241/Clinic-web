@@ -9,11 +9,11 @@ router.param("id", courseController.checkTreatmentCourseById);
 router
   .route("/")
   .get(
-    authController.protect,
-    authController.restrictTo(
-      StaticData.AUTH.Role.admin,
-      StaticData.AUTH.Role.Doctor
-    ),
+    // authController.protect,
+    // authController.restrictTo(
+    //   StaticData.AUTH.Role.admin,
+    //   StaticData.AUTH.Role.Doctor
+    // ),
     courseController.getAllCourses
   )
   .post(courseController.createCourse);
@@ -23,5 +23,6 @@ router
   .patch(courseController.updateCourse)
   .get(courseController.getCoursebyID)
   .delete(courseController.deleteCourse);
+// router.route("/:name").get(courseController.getCoursebyName);
 
 module.exports = router;

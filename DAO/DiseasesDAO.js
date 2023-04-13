@@ -1,6 +1,7 @@
 const dbConfig = require("./../database/dbconfig");
 const dbUtils = require("../utils/dbutils");
 const DiseasesSchema = require("../Model/Diseases");
+const StaticData = require("../utils/StaticData");
 const { request } = require("express");
 const { log } = require("handlebars");
 
@@ -15,6 +16,55 @@ exports.clearAll = async function () {
   return result.recordsets;
 };
 
+exports.getAllDis = async (filter) => {
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+  let query = `SELECT * from ${DiseasesSchema.schemaName}`;
+  let countQuery = `SELECT COUNT(DISTINCT ${DiseasesSchema.schema.idDis.name}) as totalItem from ${DiseasesSchema.schemaName}`;
+
+  const page = filter.page * 1 || 1;
+  let pageSize = filter.pageSize * 1 || StaticData.config.MAX_PAGE_SIZE;
+  if (pageSize > StaticData.config.MAX_PAGE_SIZE) {
+    pageSize = StaticData.config.MAX_PAGE_SIZE;
+  }
+  const { filterStr, paginationStr } = dbUtils.getFilterQuery(
+    DiseasesSchema.schema,
+    filter,
+    page,
+    pageSize,
+    DiseasesSchema.defaultSort
+  );
+
+  if (filterStr) {
+    query += " " + filterStr;
+    countQuery += " " + filterStr;
+  }
+
+  if (paginationStr) {
+    query += " " + paginationStr;
+  }
+  // console.log(query);
+  const result = await dbConfig.db.pool.request().query(query);
+  let countResult = await dbConfig.db.pool.request().query(countQuery);
+
+  let totalItem = 0;
+  if (countResult.recordsets[0].length > 0) {
+    totalItem = countResult.recordsets[0][0].totalItem;
+  }
+  let totalPage = Math.ceil(totalItem / pageSize); //round up
+
+  const diseases = result.recordsets[0];
+
+  return {
+    page,
+    pageSize,
+    totalPage,
+    totalItem,
+    diseases: diseases,
+  };
+};
+
 exports.GetDisbyId = async function (id) {
   if (!dbConfig.db.pool) {
     throw new Error("Not connected to db");
@@ -24,7 +74,7 @@ exports.GetDisbyId = async function (id) {
     .request()
     .input(
       DiseasesSchema.schema.idDis.name,
-      ReviewSchema.schema.idDis.sqlType,
+      DiseasesSchema.schema.idDis.sqlType,
       id
     )
     .query(
