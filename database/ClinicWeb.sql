@@ -99,12 +99,12 @@ SELECT * FROM dbo.Role
 SELECT * FROM dbo.Diseases
 SELECT * FROM dbo.TreatmentCourse
 SELECT * FROM dbo.Users
+SELECT * FROM dbo.Appointment
 
 -- DO NOT HAVE DATA YET
 SELECT * FROM dbo.Reviews
 SELECT * FROM dbo.TreatmentProcess
 SELECT * FROM dbo.post
-SELECT * FROM dbo.Appointment
 
 -- DELETE DATA
 DELETE FROM Users
