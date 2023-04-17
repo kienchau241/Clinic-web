@@ -63,12 +63,12 @@ exports.getAppByID = async function (id) {
   let request = dbconfig.db.pool.request();
   let result = await request
     .input(
-      AppoinmentSchema.schema.id.name,
-      AppoinmentSchema.schema.id.sqlType,
+      AppoinmentSchema.schema.idApp.name,
+      AppoinmentSchema.schema.idApp.sqlType,
       id
     )
     .query(
-      `select * from ${AppoinmentSchema.schemaName} where ${AppoinmentSchema.schema.id.name} = @${AppoinmentSchema.schema.id.name}`
+      `select * from ${AppoinmentSchema.schemaName} where ${AppoinmentSchema.schema.idApp.name} = @${AppoinmentSchema.schema.idApp.name}`
     );
   let course = result.recordsets[0][0];
   // console.log(result);

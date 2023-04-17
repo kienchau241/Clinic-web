@@ -4,16 +4,19 @@ const AppController = require("../Controller/Appointment");
 const StaticData = require("../utils/StaticData.js");
 const authController = require("../Controller/auth");
 
-router.param("id", AppController.checkAppointmentById);
+// router.param("idApp", AppController.checkAppointmentById);
 
 router
   .route("/")
   .get(
     authController.protect,
-    authController
-      .restrictTo(StaticData.AUTH.Role.Doctor, StaticData.AUTH.Role.admin)
-      .post(AppController.createAppointment)
-  );
+    authController.restrictTo(
+      StaticData.AUTH.Role.Doctor,
+      StaticData.AUTH.Role.admin
+    ),
+    AppController.createAppointment
+  )
+  .get(AppController.getAllAppointment);
 
 router
   .route("/:id")
