@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.render("course");
+  res.render("home");
 });
 
 const courseRoute = require("./Routes/TreatmentCourse");
