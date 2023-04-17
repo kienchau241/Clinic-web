@@ -12,9 +12,15 @@ const signToken = (id, username) => {
     { expiresIn: process.env.JWT_EXPIRED_IN }
   );
 };
+
+exports.loginShow = async (req, res) => {
+  res.render("login");
+};
+
 exports.login = async (req, res) => {
   try {
     const form = req.body;
+    console.log(form);
     //1. check if form is valid
     if (!form.password || !form.userName) {
       return res
@@ -52,10 +58,15 @@ exports.login = async (req, res) => {
       });
   }
 };
+
+exports.signupShow = async (req, res) => {
+  res.render("signup");
+};
+
 exports.signup = async (req, res) => {
   try {
     const form = req.body;
-    if (form.password !== form.repeatPassword) {
+    if (form.password !== form.repeatpassword) {
       return res
         .status(403) // 403 - Forbidden
         .json({
