@@ -10,9 +10,15 @@ router
   .route("/")
   .get(
     authController.protect,
-    authController.restrictTo(
-      StaticData.AUTH.Role.Doctor,
-      StaticData.AUTH.Role.admin
-    ),
-    AppController.ge
+    authController
+      .restrictTo(StaticData.AUTH.Role.Doctor, StaticData.AUTH.Role.admin)
+      .post(AppController.createAppointment)
   );
+
+router
+  .route("/:id")
+  .patch(AppController.updateAppointment)
+  .get(AppController.getAppointmentById)
+  .delete(AppController.deleteAppointment);
+
+module.exports = router;
