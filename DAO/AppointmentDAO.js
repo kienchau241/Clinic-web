@@ -3,6 +3,7 @@ const dbUtils = require("../utils/dbutils");
 const StaticData = require("../utils/StaticData");
 
 const AppoinmentSchema = require("../Model/Appointment");
+const AppointmentSchema = require("../Model/Appointment");
 
 // GET ALL APPOINTMENT
 exports.GetAllApp = async function (filter) {
@@ -55,7 +56,7 @@ exports.GetAllApp = async function (filter) {
 };
 
 // GET APPOINTMENT BY ID
-exports.getAppById = async function (id) {
+exports.getAppByID = async function (id) {
   if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
@@ -103,7 +104,7 @@ exports.createNewApp = async (appointment) => {
 };
 
 // DELETE APPOINTMENT
-exports.deleteApp = async (id) => {
+exports.deleteAppByID = async (id) => {
   if (!dbConfig.db.pool) {
     throw new Error("Not connected to db");
   }
@@ -123,7 +124,7 @@ exports.deleteApp = async (id) => {
 };
 
 // UPDATE APPOINMENT
-exports.updateApp = async (id, updateInfo) => {
+exports.updateAppByID = async (id, updateInfo) => {
   if (!dbConfig.db.pool) {
     throw new Error("Not connected to db");
   }
@@ -142,7 +143,7 @@ exports.updateApp = async (id, updateInfo) => {
   }
   request.input(
     AppoinmentSchema.schema.idApp.name,
-    TourSchema.schema.idApp.sqlType,
+    AppointmentSchema.schema.idApp.sqlType,
     id
   );
   query +=
