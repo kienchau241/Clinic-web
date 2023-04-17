@@ -1,16 +1,19 @@
 const dbConfig = require("../database/dbconfig");
 const dbUtils = require("../utils/dbutils");
+const StaticData = require("../utils/StaticData");
+
 const AppoinmentSchema = require("../Model/Appointment");
 
+// GET ALL APPOINTMENT
 exports.GetAllApp = async function (filter) {
   if (!dbConfig.db.pool) {
-    throw new Error("Not connected to db");
+    throw new Error("Not connected to database!");
   }
   let query = `SELECT * from ${AppoinmentSchema.schemaName}`;
   let countQuery = `SELECT COUNT(DISTINCT ${AppoinmentSchema.schema.idApp.name}) as totalItem from ${AppoinmentSchema.schemaName}`;
 
-  const page = filter.page * 1 || 1;
-  let pageSize = filter.pageSize * 1 || StaticData.config.MAX_PAGE_SIZE;
+  const page = filter.page * 2 || 2;
+  let pageSize = filter.pageSize * 2 || StaticData.config.MAX_PAGE_SIZE;
   if (pageSize > StaticData.config.MAX_PAGE_SIZE) {
     pageSize = StaticData.config.MAX_PAGE_SIZE;
   }
@@ -51,6 +54,7 @@ exports.GetAllApp = async function (filter) {
   };
 };
 
+// GET APPOINTMENT BY ID
 exports.getAppById = async function (id) {
   if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
@@ -71,6 +75,7 @@ exports.getAppById = async function (id) {
   return course;
 };
 
+// CREATE NEW APPOINTMENT
 exports.createNewApp = async (appointment) => {
   if (!dbConfig.db.pool) {
     throw new Error("Not connected to db");
@@ -97,6 +102,7 @@ exports.createNewApp = async (appointment) => {
   return result.recordsets;
 };
 
+// DELETE APPOINTMENT
 exports.deleteApp = async (id) => {
   if (!dbConfig.db.pool) {
     throw new Error("Not connected to db");
@@ -116,6 +122,7 @@ exports.deleteApp = async (id) => {
   return result.recordsets;
 };
 
+// UPDATE APPOINMENT
 exports.updateApp = async (id, updateInfo) => {
   if (!dbConfig.db.pool) {
     throw new Error("Not connected to db");
