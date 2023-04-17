@@ -92,7 +92,7 @@ VALUES
 INSERT INTO Users
 VALUES 
 ('thang045', 'thang045@gmail.com', '123456aA', '2023/06/04 08:30:50', 'https://www.shutterstock.com/image-photo/hospital-interior-operating-surgery-table-lamps-1407429638', 1, '2023/06/04 08:35:59'),
-('cgk23', 'cgk23@gmail.com', '223123aA@', '2023/06/04 08:41:20', 'https://www.shutterstock.com/image-illustration/room-equipment-clinic-dermatology-cosmetology-3d-664883989', 1, '2023/06/04 08:50:59')
+('cgk23', 'cgk23@gmail.com', '223123aA@', '2023/06/04 08:41:20', 'https://www.shutterstock.com/image-illustration/room-equipment-clinic-dermatology-cosmetology-3d-664883989', 1, '2023/06/04 08:50:59'),
 
 -- ALREADY HAVE DATA
 SELECT * FROM dbo.Role

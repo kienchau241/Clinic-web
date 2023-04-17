@@ -4,5 +4,15 @@ const AppController = require("../Controller/Appointment");
 const StaticData = require("../utils/StaticData.js");
 const authController = require("../Controller/auth");
 
-// router.route('/')
-//     .
+router.param("id", AppController.checkAppointmentById);
+
+router
+  .route("/")
+  .get(
+    authController.protect,
+    authController.restrictTo(
+      StaticData.AUTH.Role.Doctor,
+      StaticData.AUTH.Role.admin
+    ),
+    AppController.ge
+  );
