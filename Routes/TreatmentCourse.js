@@ -18,6 +18,8 @@ router
   )
   .post(courseController.createCourse);
 
+router.route("/create").get(courseController.createShow);
+
 router
   .route("/:id")
   .patch(courseController.updateCourse)

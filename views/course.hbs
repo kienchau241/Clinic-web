@@ -1,6 +1,8 @@
 <div class="mt-4">
+  <div class="add">
+    <a href="./create" class="btn btn-primary btn-add">Add course</a>
+  </div>
   <div class="row">
-
     {{#each TreatmentCourses}}
     <div class="col-sm-6 col-lg-4">
         <div class="card" style="margin-top:16px;">
@@ -23,5 +25,10 @@
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
+    }
+
+    .add{
+      display: flex;
+      flex-direction: row-reverse;
     }
 </style>

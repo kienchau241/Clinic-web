@@ -49,6 +49,10 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
+exports.createShow = async (req, res) => {
+  res.render("./TreatmentCourse/createCourse");
+};
+
 exports.createCourse = async (req, res) => {
   const newcourse = req.body;
   try {

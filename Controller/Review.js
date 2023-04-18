@@ -55,9 +55,8 @@ exports.getAllReviews = async (req, res, next) => {
 
 exports.getReview = async (req, res, next) => {
   try {
-    // console.log(req.params);
-    const review = req.review;
-
+    const id = req.params.id * 1;
+    const review = await ReviewDAO.getReview(id);
     res.status(200).json({
       code: 200,
       msg: "OK",
