@@ -7,11 +7,11 @@ const authController = require("../Controller/auth");
 router
   .route("/")
   .post(
-    authController.protect,
-    authController.restrictTo(
-      StaticData.AUTH.Role.admin,
-      StaticData.AUTH.Role.admin
-    ),
+    // authController.protect,
+    // authController.restrictTo(
+    //   StaticData.AUTH.Role.admin,
+    //   StaticData.AUTH.Role.admin
+    // ),
     DisController.addDis
   )
   .get(DisController.getAllDis);
@@ -22,18 +22,18 @@ router
   .route("/:id")
   .delete(
     authController.protect,
-    authController.restrictTo(
-      StaticData.AUTH.Role.admin,
-      StaticData.AUTH.Role.admin
-    ),
+    // authController.restrictTo(
+    //   StaticData.AUTH.Role.admin,
+    //   StaticData.AUTH.Role.admin
+    // ),
     DisController.deleteDis
   )
   .patch(
     authController.protect,
-    authController.restrictTo(
-      StaticData.AUTH.Role.admin,
-      StaticData.AUTH.Role.admin
-    ),
+    // authController.restrictTo(
+    //   StaticData.AUTH.Role.admin,
+    //   StaticData.AUTH.Role.admin
+    // ),
     DisController.updateCourse
   )
   .get(DisController.getDisbyId);

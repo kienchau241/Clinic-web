@@ -11,7 +11,7 @@ router
 
 router
   .route("/:id")
-  .patch(postController.updateReview)
+  .patch(postController.updatepost)
   .delete(postController.deletePost)
   .get(postController.getPost);
 

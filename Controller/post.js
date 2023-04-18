@@ -30,18 +30,19 @@ exports.getAllPosts = async (req, res, next) => {
     console.log(req.query);
     const { page, pageSize, totalPage, totalItem, posts } =
       await postDAO.getAllPosts(req.query);
-    res.status(200).json({
-      //200 - OK
-      code: 200,
-      msg: "OK",
-      page,
-      pageSize,
-      totalPage,
-      totalItem,
-      data: {
-        posts,
-      },
-    });
+    // res.status(200).json({
+    //   //200 - OK
+    //   code: 200,
+    //   msg: "OK",
+    //   page,
+    //   pageSize,
+    //   totalPage,
+    //   totalItem,
+    //   data: {
+    //     posts,
+    //   },
+    // });
+    res.render("post", { posts });
   } catch (e) {
     console.error(e);
     res
@@ -55,14 +56,14 @@ exports.getAllPosts = async (req, res, next) => {
 
 exports.getPost = async (req, res, next) => {
   try {
-    // console.log(req.params);
-    const post = req.post;
-
-    res.status(200).json({
-      code: 200,
-      msg: "OK",
-      data: { post },
-    });
+    const id = req.params.id * 1;
+    const post = await postDAO.getPostsbyId(id);
+    // res.status(200).json({
+    //   code: 200,
+    //   msg: "OK",
+    //   data:  post ,
+    // });
+    res.render("./post/detailPost", post);
   } catch (e) {
     console.error(e);
     res
@@ -91,7 +92,7 @@ exports.createPost = async (req, res, next) => {
   }
 };
 
-exports.updateReview = async (req, res, next) => {
+exports.updatepost = async (req, res, next) => {
   try {
     const id = req.params.id * 1;
     const updatePost = req.body;
