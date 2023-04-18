@@ -92,7 +92,12 @@ VALUES
 INSERT INTO Users
 VALUES 
 ('thang045', 'thang045@gmail.com', '123456aA', '2023/06/04 08:30:50', 'https://www.shutterstock.com/image-photo/hospital-interior-operating-surgery-table-lamps-1407429638', 1, '2023/06/04 08:35:59'),
-('cgk23', 'cgk23@gmail.com', '223123aA@', '2023/06/04 08:41:20', 'https://www.shutterstock.com/image-illustration/room-equipment-clinic-dermatology-cosmetology-3d-664883989', 1, '2023/06/04 08:50:59'),
+('cgk23', 'cgk23@gmail.com', '223123aA@', '2023/06/04 08:41:20', 'https://www.shutterstock.com/image-illustration/room-equipment-clinic-dermatology-cosmetology-3d-664883989', 1, '2023/06/04 08:50:59')
+
+INSERT INTO Appointment
+VALUES 
+(1, 4, '2023/10/04 10:20:22'),
+(2, 3, '2023/10/04 10:22:00') 
 
 -- ALREADY HAVE DATA
 SELECT * FROM dbo.Role
@@ -108,11 +113,16 @@ SELECT * FROM dbo.post
 
 -- DELETE DATA
 DELETE FROM Users
-WHERE 	id = 1
+WHERE 	id = 4
+GO
+
+DELETE FROM Appointment
+WHERE idApp = 1
 GO
 
 -- RESEED IDENTITY & DBCC stands for Database Consistency Checker
-DBCC CHECKIDENT ('Users', RESEED, 0)
+DBCC CHECKIDENT ('Users', RESEED, 2)
+DBCC CHECKIDENT ('Appointment', RESEED, 0)
 
 -- This command works, but the masking does not appear.
 ALTER TABLE [dbo].[Users]

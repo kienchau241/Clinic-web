@@ -12,8 +12,8 @@ exports.GetAllApp = async function (filter) {
   let query = `SELECT * from ${AppoinmentSchema.schemaName}`;
   let countQuery = `SELECT COUNT(DISTINCT ${AppoinmentSchema.schema.idApp.name}) as totalItem from ${AppoinmentSchema.schemaName}`;
 
-  const page = filter.page * 2 || 2;
-  let pageSize = filter.pageSize * 2 || StaticData.config.MAX_PAGE_SIZE;
+  const page = filter.page * 1 || 1;
+  let pageSize = filter.pageSize * 1 || StaticData.config.MAX_PAGE_SIZE;
   if (pageSize > StaticData.config.MAX_PAGE_SIZE) {
     pageSize = StaticData.config.MAX_PAGE_SIZE;
   }
@@ -34,7 +34,7 @@ exports.GetAllApp = async function (filter) {
     query += " " + paginationStr;
   }
   // console.log(query);
-  const result = await dbConfig.db.pool.request().query(query);
+  let result = await dbConfig.db.pool.request().query(query);
   let countResult = await dbConfig.db.pool.request().query(countQuery);
 
   let totalItem = 0;
@@ -43,14 +43,12 @@ exports.GetAllApp = async function (filter) {
   }
   let totalPage = Math.ceil(totalItem / pageSize); //round up
 
-  const Appointment = result.recordsets[0];
-
   return {
     page,
     pageSize,
     totalPage,
     totalItem,
-    Appointment: Appointment,
+    Appointment: result.recordsets[0],
   };
 };
 

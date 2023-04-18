@@ -1,4 +1,5 @@
 const AppointmentDAO = require("../DAO/AppointmentDAO");
+const app = require("../app");
 
 // CRUD OPERANTIONS
 // R stands for READ (GET) APPOINTMENT
@@ -6,9 +7,19 @@ exports.getAllAppointment = async (req, res) => {
   try {
     console.log("gets All Appointment");
     const { page, pageSize, totalPage, totalItem, Appointment } =
-      await AppointmentDAO.getAllAppointment(req.query);
+      await AppointmentDAO.GetAllApp(req.query);
     console.log(req.quire);
-    res.render("Appointment", { Appointment });
+    res.status(200).json({
+      code: 200,
+      msg: "OK",
+      page,
+      pageSize,
+      totalPage,
+      totalItem,
+      data: {
+        Appointment,
+      },
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({
@@ -19,17 +30,37 @@ exports.getAllAppointment = async (req, res) => {
 };
 
 // R stands for READ (GET) APPOINTMENT "BY ID"
-exports.getAppointmentById = async (req, res, next, val) => {
+exports.checkIDappointment = async (req, res, next, val) => {
   try {
     const id = val;
-    let Appointment = await AppointmentDAO.getAppointmentById(id);
-    if (!Appointment) {
+    let appointment = await AppointmentDAO.getAppByID(id);
+    if (!appointment) {
       return res.status(404).json({
         code: 404,
-        msg: `Not found tour with id ${id}`,
+        msg: `Not found appointment with id ${id}`,
       });
     }
-    req.Appointment = Appointment;
+    req.appointment = appointment;
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({
+      code: 500,
+      msg: e.toString(),
+    });
+  }
+  next();
+};
+
+exports.getAppointmentById = async (req, res) => {
+  try {
+    const Appointment = req.Appointment;
+    res.status(200).json({
+      code: 200,
+      msg: "OK",
+      data: {
+        Appointment,
+      },
+    });
   } catch (e) {
     console.error(e);
     return res
@@ -39,7 +70,6 @@ exports.getAppointmentById = async (req, res, next, val) => {
         msg: e.toString(),
       });
   }
-  next();
 };
 
 // C stands for CREATE APPOINTMENT

@@ -23,7 +23,7 @@ router.route("/login").post(authController.login);
 router
   .route("/")
   .get(userController.getAllUsers)
-  .post(authController.protect, userController.createUser);
+  .post(/*authController.protect, */ userController.createUser);
 router
   .route("/:id")
   .get(userController.getUser)
