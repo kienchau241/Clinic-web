@@ -15,7 +15,7 @@
   </div>
   <div class="mb-3">
     <label for="price" class="form-label">Price</label>
-    <input type="number" step="0.01" class="form-control" id="price" name="price"/>
+    <input type="number" step="0.01" class="form-control" id="num" name="price"/>
   </div>
   <div class="mb-3">
     <label for="createdAt" class="form-label">Created At</label>
@@ -23,13 +23,14 @@
   </div>
   <div class="mb-3">
     <label for="idDis" class="form-label">Id Disease</label>
-    <input type="number" class="form-control" id="idDis" name="idDis"/>
+    <input type="number" class="form-control" id="num" name="idDis"/>
   </div>
+  <script>
+    const numInput = document.querySelector('#num');
+    num.addEventListener('input', function(){
+        let val = num.value;
+        let result = val.valueAsNumber;
+    })
+    </script>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-<script>
-    const formInputPrice = document.getElementById("price").value
-    const formInputidDis = document.getElementById("idDis").value
-    Number(formInputidDis);
-    Number(formInputPrice);
-</script>
