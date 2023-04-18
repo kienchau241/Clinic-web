@@ -73,7 +73,7 @@ exports.creatPost = async function (post) {
   }
 
   let now = new Date();
-  review.createdAt = now.toISOString();
+  post.createdAt = now.toISOString();
 
   let insertData = postSchema.validateData(post);
 
@@ -102,7 +102,7 @@ exports.updatePost = async function (id, updatePost) {
     throw new Error("Not connected to db");
   }
 
-  if (!updateReview) {
+  if (!updatePost) {
     throw new Error("Invalid update param");
   }
 
