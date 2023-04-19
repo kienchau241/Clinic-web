@@ -71,6 +71,14 @@ ALTER TABLE TreatmentCourse
     ADD idDis INT,
     FOREIGN KEY(idDis) REFERENCES Diseases(idDis)
 
+-- RENAME ID COLUMN
+EXEC sp_rename 'Role.id', 'idRole'
+EXEC sp_rename 'TreatmentCourse.id', 'idTMCourse'
+EXEC sp_rename 'Users.id', 'idUser'
+EXEC sp_rename 'Appointment.idApp', 'idAppointment'
+EXEC sp_rename 'Reviews.id', 'idReviews'
+EXEC sp_rename 'post.id', 'idPost'
+
 -- ALTER DATABASE
 ALTER DATABASE ClinicWeb SET COMPATIBILITY_LEVEL = 160;
 
