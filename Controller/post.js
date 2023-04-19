@@ -75,14 +75,20 @@ exports.getPost = async (req, res, next) => {
   }
 };
 
+exports.creatShow = async (req, res) => {
+  res.render("./post/createPost");
+};
+
 exports.createPost = async (req, res, next) => {
   const newPost = req.body;
+  newPost.UserId = newPost.UserId * 1;
   try {
     await postDAO.creatPost(newPost);
-    return res.status(200).json({
-      code: 200,
-      msg: `Create new post successfully!`,
-    });
+    // return res.status(200).json({
+    //   code: 200,
+    //   msg: `Create new post successfully!`,
+    // });
+    return res.redirect("/api/v1/post");
   } catch (e) {
     console.log(e);
     res.status(500).json({

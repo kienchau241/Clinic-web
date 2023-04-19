@@ -18,6 +18,8 @@ router
 
 //router.route("/:slug").get(DisController.GetDisbyName);
 
+router.route("/create").get(DisController.createShow);
+
 router
   .route("/:id")
   .delete(

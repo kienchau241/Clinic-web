@@ -1,0 +1,31 @@
+<form style="margin-top: 20px" method="post" action="/api/v1/post">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input
+      type="text"
+      class="form-control"
+      id="title"
+      name="title"
+      aria-describedby="emailHelp"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Content</label>
+    <textarea
+      type="text"
+      class="form-control"
+      id="content"
+      name="content"
+      rows="15"
+    ></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="UserId" class="form-label">UserId</label>
+    <input type="text" class="form-control" id="UserId" name="UserId" />
+  </div>
+  <div class="mb-3">
+    <label for="postTime" class="form-label">Post time</label>
+    <input type="date" class="form-control" id="postTime" name="postTime" />
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

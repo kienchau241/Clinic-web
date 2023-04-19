@@ -9,6 +9,8 @@ router
   .get(postController.getAllPosts)
   .post(postController.createPost);
 
+router.route("/create").get(postController.creatShow);
+
 router
   .route("/:id")
   .patch(postController.updatepost)

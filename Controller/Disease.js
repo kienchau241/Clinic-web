@@ -69,19 +69,25 @@ exports.getAllDis = async (req, res) => {
       });
   }
 };
+
+exports.createShow = async (req, res) => {
+  res.render("./diseases/createDis");
+};
+
 exports.addDis = async (req, res) => {
   const newDis = req.body;
   try {
     await DisDAO.addDis(newDis);
     let disease = await DisDAO.GetDisbyId;
     disease = await DisDAO.GetDisbyId(disease.idDis);
-    return res.status(200).json({
-      code: 200,
-      msg: "Create disease success",
-      data: {
-        course,
-      },
-    });
+    // return res.status(200).json({
+    //   code: 200,
+    //   msg: "Create disease success",
+    //   data: {
+    //     disease,
+    //   },
+    // });
+    res.redirect("/api/v1/disease");
   } catch (e) {
     console.log(e);
     res.status(500).json({

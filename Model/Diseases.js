@@ -18,8 +18,8 @@ const DiseasesSchema = new ModelSchema(
       sqlType: sql.VarChar,
       require: true,
     }),
-    Condition: new ModelSchemaValidator({
-      name: "Condition",
+    Conditions: new ModelSchemaValidator({
+      name: "Conditions",
       sqlType: sql.VarChar,
       require: true,
     }),
