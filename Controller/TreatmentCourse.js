@@ -55,17 +55,23 @@ exports.createShow = async (req, res) => {
 
 exports.createCourse = async (req, res) => {
   const newcourse = req.body;
+  newcourse.price = newcourse.price * 1;
+  newcourse.idDis = newcourse.idDis * 1;
+  // const inputNum = document.querySelector(".num");
+  // const inputVal = Number(inputNum.value);
+  // inputNum.value = inputVal;
   try {
     await TreatmentCourseDAO.createCourse(newcourse);
     let course = await TreatmentCourseDAO.getCoursebyID;
     course = await TreatmentCourseDAO.getCoursebyID(course.id);
-    return res.status(200).json({
-      code: 200,
-      msg: "Create course success",
-      data: {
-        course,
-      },
-    });
+    // return res.status(200).json({
+    //   code: 200,
+    //   msg: "Create course success",
+    //   data: {
+    //     course,
+    //   },
+    // });
+    return res.redirect("/api/v1/courses");
   } catch (e) {
     console.log(e);
     res.status(500).json({

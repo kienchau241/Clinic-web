@@ -4,8 +4,20 @@ const exphbs = require("express-handlebars");
 const app = express();
 const bodyParser = require("body-parser");
 
+var hbs = exphbs.create({
+  defaultLayout: "main",
+  extname: ".hbs",
+  helpers: {
+    section: function (name, options) {
+      if (!this._sections) this._sections = {};
+      this._sections[name] = options.fn(this);
+      return null;
+    },
+  },
+});
+
 //Template engine
-app.engine("hbs", exphbs.engine({ extname: ".hbs" }));
+app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 
 app.use(morgan("dev"));
