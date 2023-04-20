@@ -25,6 +25,12 @@ exports.checkID = async (req, res, next, val) => {
   next();
 };
 
+exports.storePost = async (req, res) => {
+  const { page, pageSize, totalPage, totalItem, posts } =
+    await postDAO.getAllPosts(req.query);
+  res.render("./post/StorePost", { posts });
+};
+
 exports.getAllPosts = async (req, res, next) => {
   try {
     console.log(req.query);
@@ -75,6 +81,12 @@ exports.getPost = async (req, res, next) => {
   }
 };
 
+exports.editShow = async (req, res) => {
+  const id = req.params.id * 1;
+  const post = await postDAO.getPostsbyId(id);
+  res.render("./post/editPost", post);
+};
+
 exports.creatShow = async (req, res) => {
   res.render("./post/createPost");
 };
@@ -102,15 +114,17 @@ exports.updatepost = async (req, res, next) => {
   try {
     const id = req.params.id * 1;
     const updatePost = req.body;
+    updatePost.UserId = updatePost.UserId * 1;
     await postDAO.updatePost(id, updatePost);
     const post = await postDAO.getPostsbyId(id);
-    res.status(200).json({
-      code: 200,
-      msg: `Update post with id: ${id} successfully!`,
-      data: {
-        post,
-      },
-    });
+    // res.status(200).json({
+    //   code: 200,
+    //   msg: `Update post with id: ${id} successfully!`,
+    //   data: {
+    //     post,
+    //   },
+    // });
+    res.redirect("/api/v1/post/storePost");
   } catch (e) {
     console.error(e);
     res

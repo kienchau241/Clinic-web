@@ -20,11 +20,15 @@ router
 
 router.route("/create").get(courseController.createShow);
 
+router.route("/storeCourse").get(courseController.StoreCourseShow);
+
 router
   .route("/:id")
   .patch(courseController.updateCourse)
   .get(courseController.getCoursebyID)
   .delete(courseController.deleteCourse);
 // router.route("/:name").get(courseController.getCoursebyName);
+
+router.route("/:id/edit").get(courseController.editShow);
 
 module.exports = router;

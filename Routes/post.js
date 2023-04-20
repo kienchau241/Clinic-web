@@ -9,6 +9,8 @@ router
   .get(postController.getAllPosts)
   .post(postController.createPost);
 
+router.route("/storePost").get(postController.storePost);
+
 router.route("/create").get(postController.creatShow);
 
 router
@@ -16,5 +18,7 @@ router
   .patch(postController.updatepost)
   .delete(postController.deletePost)
   .get(postController.getPost);
+
+router.route("/:id/edit").get(postController.editShow);
 
 module.exports = router;

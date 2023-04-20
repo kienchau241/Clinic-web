@@ -1,6 +1,11 @@
 <div class="mt-4">
+  <div class="btn-group btn-CRUD">
    <div class="add">
     <a href="./post/create" class="btn btn-primary btn-add">Add post</a>
+  </div>
+  <div class="btn-CRUD">
+        <a href="./post/storePost" class="btn btn-primary btn-add">Edit/Delete post</a>
+    </div>
   </div>
   <div class="row">
     {{#each posts}}
@@ -9,7 +14,7 @@
             <img src="https://climate.onep.go.th/wp-content/uploads/2020/01/default-image.jpg" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title">{{this.title}}</h5>
-              <p class="card-text">{{this.content}}</p>
+              <p class="card-text">{{this.noiDung}}</p>
               <a href="./post/{{this.id}}" class="btn btn-primary">Detail</a>
             </div>
         </div>
@@ -29,5 +34,14 @@
     .add{
       display: flex;
       flex-direction: row-reverse;
+    }
+    .btn-group{
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .btn-CRUD{
+      margin-left: 10px;
+      margin-right: 10px;
     }
 </style>

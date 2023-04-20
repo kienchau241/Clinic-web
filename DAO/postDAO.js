@@ -111,7 +111,7 @@ exports.updatePost = async function (id, updatePost) {
   const { request, updateStr } = dbUtils.getUpdateQuery(
     postSchema.schema,
     dbConfig.db.pool.request(),
-    updateReview
+    updatePost
   );
   if (!updateStr) {
     throw new Error("Invalid update param");

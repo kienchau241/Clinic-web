@@ -24,6 +24,13 @@ exports.checkTreatmentCourseById = async (req, res, next, val) => {
 };
 
 //CRUD operation
+
+exports.StoreCourseShow = async (req, res) => {
+  const { page, pageSize, totalPage, totalItem, TreatmentCourses } =
+    await TreatmentCourseDAO.getallCourse(req.query);
+  res.render("./TreatmentCourse/StoreCourse", { TreatmentCourses });
+};
+
 exports.getAllCourses = async (req, res) => {
   try {
     console.log("getAllCourses");
@@ -81,20 +88,29 @@ exports.createCourse = async (req, res) => {
   }
 };
 
+exports.editShow = async (req, res) => {
+  const id = req.params.id * 1;
+  const course = await TreatmentCourseDAO.getCoursebyID(id);
+  res.render("./TreatmentCourse/EditCourse", course);
+};
+
 exports.updateCourse = async (req, res) => {
   try {
     const id = req.params.id * 1;
     const updateInfo = req.body;
+    updateInfo.price = updateInfo.price * 1;
+    updateInfo.idDis = updateInfo.idDis * 1;
     await TreatmentCourseDAO.updateCourseById(id, updateInfo);
     const course = await TreatmentCourseDAO.getCoursebyID(id);
     console.log(req.body);
-    return res.status(200).json({
-      code: 200,
-      msg: `Update course with id: ${id} successfully!`,
-      data: {
-        course,
-      },
-    });
+    // return res.status(200).json({
+    //   code: 200,
+    //   msg: `Update course with id: ${id} successfully!`,
+    //   data: {
+    //     course,
+    //   },
+    // });
+    return res.redirect(`/api/v1/courses/storeCourse`);
   } catch (e) {
     console.error(e);
     res

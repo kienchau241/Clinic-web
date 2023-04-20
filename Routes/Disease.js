@@ -20,24 +20,28 @@ router
 
 router.route("/create").get(DisController.createShow);
 
+router.route("/StoreDis").get(DisController.StoreDis);
+
 router
   .route("/:id")
   .delete(
-    authController.protect,
-    // authController.restrictTo(
-    //   StaticData.AUTH.Role.admin,
-    //   StaticData.AUTH.Role.admin
-    // ),
+    // authController.protect,
+    // // authController.restrictTo(
+    // //   StaticData.AUTH.Role.admin,
+    // //   StaticData.AUTH.Role.admin
+    // // ),
     DisController.deleteDis
   )
   .patch(
-    authController.protect,
-    // authController.restrictTo(
-    //   StaticData.AUTH.Role.admin,
-    //   StaticData.AUTH.Role.admin
-    // ),
+    // authController.protect,
+    // // authController.restrictTo(
+    // //   StaticData.AUTH.Role.admin,
+    // //   StaticData.AUTH.Role.admin
+    // // ),
     DisController.updateCourse
   )
   .get(DisController.getDisbyId);
+
+router.route("/:id/edit").get(DisController.editShow);
 
 module.exports = router;

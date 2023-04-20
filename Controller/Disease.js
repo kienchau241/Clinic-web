@@ -97,6 +97,18 @@ exports.addDis = async (req, res) => {
   }
 };
 
+exports.StoreDis = async (req, res) => {
+  const { page, pageSize, totalPage, totalItem, diseases } =
+    await DisDAO.getAllDis(req.query);
+  res.render("./diseases/storeDis", { diseases });
+};
+
+exports.editShow = async (req, res) => {
+  const id = req.params.id * 1;
+  const dis = await DisDAO.GetDisbyId(id);
+  res.render("./diseases/EditDis", dis);
+};
+
 exports.updateCourse = async (req, res) => {
   try {
     const id = req.params.id * 1;
@@ -104,13 +116,14 @@ exports.updateCourse = async (req, res) => {
     await DisDAO.updateDis(id, updateInfo);
     const disease = await DisDAO.GetDisbyId(id);
     console.log(req.body);
-    return res.status(200).json({
-      code: 200,
-      msg: `Update disease with id: ${id} successfully!`,
-      data: {
-        disease,
-      },
-    });
+    // return res.status(200).json({
+    //   code: 200,
+    //   msg: `Update disease with id: ${id} successfully!`,
+    //   data: {
+    //     disease,
+    //   },
+    // });
+    return res.redirect("./StoreDis");
   } catch (e) {
     console.error(e);
     res

@@ -1,6 +1,12 @@
 <div class="mt-4">
-  <div class="add">
-    <a href="./disease/create" class="btn btn-primary btn-add">Add disease</a>
+  <div class="btn-group btn-CRUD">
+    <div class="add">
+      <a href="./disease/create" class="btn btn-primary btn-add">Add disease</a>
+    </div>
+    <div class="btn-CRUD">
+        <a href="./disease/StoreDis" class="btn btn-primary btn-add">Edit/Delete disease</a>
+    </div>
+
   </div>
   <div class="row">
     {{#each diseases}}
@@ -31,5 +37,15 @@
     .add{
       display: flex;
       flex-direction: row-reverse;
+    }
+
+    .btn-group{
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .btn-CRUD{
+      margin-left: 10px;
+      margin-right: 10px;
     }
 </style>

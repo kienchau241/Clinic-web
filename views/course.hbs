@@ -1,6 +1,11 @@
 <div class="mt-4">
-  <div class="add">
-    <a href="./courses/create" class="btn btn-primary btn-add">Add course</a>
+  <div class="btn-group ">
+    <div class="add btn-CRUD">
+      <a href="./courses/create" class="btn btn-primary btn-add">Add course</a>
+    </div>
+    <div class="btn-CRUD">
+      <a href="./courses/storeCourse" class="btn btn-primary btn-add">Edit/Delete course</a>
+    </div>
   </div>
   <div class="row">
     {{#each TreatmentCourses}}
@@ -28,7 +33,16 @@
     }
 
     .add{
+      flex-direction: row-reverse;
+    }
+
+    .btn-group{
       display: flex;
       flex-direction: row-reverse;
+    }
+
+    .btn-CRUD{
+      margin-left: 10px;
+      margin-right: 10px;
     }
 </style>

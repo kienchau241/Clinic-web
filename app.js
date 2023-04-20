@@ -3,17 +3,14 @@ const morgan = require("morgan");
 const exphbs = require("express-handlebars");
 const app = express();
 const bodyParser = require("body-parser");
+var methodOverride = require("method-override");
 
 var hbs = exphbs.create({
   defaultLayout: "main",
   extname: ".hbs",
-  // helpers: {
-  //   section: function (name, options) {
-  //     if (!this._sections) this._sections = {};
-  //     this._sections[name] = options.fn(this);
-  //     return null;
-  //   },
-  // },
+  helpers: {
+    sum: (a, b) => a + b,
+  },
 });
 
 //Template engine
@@ -22,6 +19,7 @@ app.set("view engine", "hbs");
 
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(methodOverride("_method"));
 
 app.use((req, res, next) => {
   const requestTime = new Date().toISOString();
