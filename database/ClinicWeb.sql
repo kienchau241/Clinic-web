@@ -7,7 +7,7 @@ CREATE TABLE Role(
 	id		INT PRIMARY KEY  ,
 	name	VARCHAR(10)
 )
-
+-- 8 columns
 CREATE TABLE Users(
 	id INT identity (1,1) PRIMARY KEY      NOT NULL,
 	username	VARCHAR(100) NOT NULL,
@@ -17,8 +17,8 @@ CREATE TABLE Users(
 	photo		VARCHAR(300) NOT NULL,
 	role		INT FOREIGN KEY REFERENCES Role(id) default 1 NOT NULL,
 	createdAt	DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
-)
-
+) 
+-- 8 columns (add idDis FK from Disease table)
 CREATE TABLE TreatmentCourse(
 	id              INT identity (1,1) PRIMARY KEY      NOT NULL,
 	name		VARCHAR(50) NOT NULL, 
@@ -29,6 +29,7 @@ CREATE TABLE TreatmentCourse(
 	createdAt	DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,	
 )
 
+-- 6 columns
 CREATE TABLE Reviews	
 (
     id			INT identity (1,1) PRIMARY KEY             NOT NULL,
@@ -39,6 +40,7 @@ CREATE TABLE Reviews
     createdAt	DATETIME DEFAULT CURRENT_TIMESTAMP        NOT NULL,
 )
 
+-- 4 columns
 CREATE TABLE Diseases(
 	idDis		INT identity (1,1) PRIMARY KEY      NOT NULL,
 	nameDis		VARCHAR(100) NOT NULL,
@@ -46,11 +48,13 @@ CREATE TABLE Diseases(
 	Conditions	VARCHAR(300) NOT NULL,
 )
 
+-- 2 columns
 CREATE TABLE TreatmentProcess(
 	UserId	INT FOREIGN KEY REFERENCES Users(id),
 	TreatmentCourseId	INT FOREIGN KEY REFERENCES TreatmentCourse(id),
 ) 
 
+-- 5 columns
 CREATE TABLE post(
 	id INT identity (1,1) PRIMARY KEY      NOT NULL,
 	title VARCHAR(200) NOT NULL,
@@ -59,6 +63,7 @@ CREATE TABLE post(
 	postTime	DATETIME DEFAULT CURRENT_TIMESTAMP        NOT NULL	
 )
 
+-- 4 columns
 CREATE TABLE Appointment(
 	idApp	INT identity (1,1) PRIMARY KEY ,
 	PatientId	INT FOREIGN KEY REFERENCES Users(id)   NOT NULL,
