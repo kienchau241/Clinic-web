@@ -20,10 +20,71 @@
           <td>{{this.createdAt}}</td>
           <td>
             <a href="./{{this.idDis}}/edit" class="btn btn-link">Edit</a>
-            <a href="" class="btn btn-link">Delete</a>
+            <a
+              href=""
+              class="btn btn-link"
+              data-bs-toggle="modal"
+              data-bs-target="#delete-modal"
+              data-id="{{this.id}}"
+            >Delete</a>
           </td>
         </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
+
+{{! Confirm Delete }}
+<div id="delete-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Do you want to delete ?</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure ?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          id="btn-delete"
+        >Delete</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          data-id="{{this.id}}"
+        >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form action="" method="post" name="delete-form"></form>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function(){
+    var id;
+    var deleteform = document.forms['delete-form'];
+    var btnDelete = document.getElementById('btn-delete');
+    $('#delete-modal').on('show.bs.modal', function (event) { 
+      var button=$(event.relatedTarget); 
+      id = button.data('id'); 
+      
+      btnDelete.onclick=function(){
+        deleteform.action = '/api/v1/courses/' + id + '?_method=DELETE';
+        deleteform.submit();
+      } 
+  }) 
+})
+
+
+</script>

@@ -20,10 +20,44 @@
           <td>{{this.postTime}}</td>
           <td>
             <a href="./{{this.id}}/edit" class="btn btn-link">Edit</a>
-            <a href="" class="btn btn-link">Delete</a>
+            <a
+              href=""
+              class="btn btn-link"
+              data-bs-toggle="modal"
+              data-bs-target="#delete-modal"
+              data-id="{{this.id}}"
+            >Delete</a>
           </td>
         </tr>
       {{/each}}
     </tbody>
   </table>
+</div>
+
+{{! Confirm Delete }}
+<div id="delete-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Do you want to delete ?</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger">Delete</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Close</button>
+      </div>
+    </div>
+  </div>
 </div>

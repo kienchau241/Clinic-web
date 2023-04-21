@@ -126,10 +126,11 @@ exports.deleteCourse = async (req, res) => {
   try {
     const id = req.params.id * 1;
     await TreatmentCourseDAO.deleteCourseById(id);
-    return res.status(200).json({
-      cose: 200,
-      msg: `Delete course with id ${id} success`,
-    });
+    // return res.status(200).json({
+    //   cose: 200,
+    //   msg: `Delete course with id ${id} success`,
+    // }); 
+    return res.redirect('back')
   } catch (e) {
     return res.status(500).json({
       cose: 500,
@@ -176,31 +177,3 @@ exports.getCoursebyName = async (req, res) => {
     });
   }
 };
-
-// exports.getCourse = async (req, res) => {
-//   try {
-//     const slug = req.params.slug;
-//     if (slug === Number) {
-//       const id = req.params.id * 1;
-//       const course = await TreatmentCourseDAO.getCoursebyID(id);
-//       return res.status(200).json({
-//         code: 200,
-//         msg: "success",
-//         data: {
-//           course,
-//         },
-//       });
-//     }
-//     if (slug === String) {
-//       const name = req.params.slug;
-//       const course = await TreatmentCourseDAO.getCourseByName(name);
-//       return res.status(200).json({
-//         code: 200,
-//         msg: "success",
-//         data: {
-//           course,
-//         },
-//       });
-//     }
-//   } catch (e) {}
-// };
