@@ -140,10 +140,11 @@ exports.deletePost = async (req, res, next) => {
   try {
     const id = req.params.id * 1;
     await postDAO.deletePost(id);
-    res.status(200).json({
-      code: 200,
-      msg: `Delete post with ${id} successfully!`,
-    });
+    // res.status(200).json({
+    //   code: 200,
+    //   msg: `Delete post with ${id} successfully!`,
+    // });
+    res.redirect('back');
   } catch (e) {
     console.error(e);
     res

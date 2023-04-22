@@ -139,10 +139,11 @@ exports.deleteDis = async (req, res) => {
   try {
     const id = req.params.id * 1;
     await DisDAO.deleteDis(id);
-    return res.status(200).json({
-      cose: 200,
-      msg: `Delete disease with id ${id} success`,
-    });
+    // return res.status(200).json({
+    //   cose: 200,
+    //   msg: `Delete disease with id ${id} success`,
+    // });
+    return res.redirect('back')
   } catch (e) {
     return res.status(500).json({
       cose: 500,
