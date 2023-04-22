@@ -7,18 +7,35 @@ const authController = require("../Controller/auth");
 router
   .route("/")
   .get(postController.getAllPosts)
-  .post(postController.createPost);
+  .post(
+    // authController.protect,
+    // authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
+    postController.createPost);
 
-router.route("/storePost").get(postController.storePost);
+router.route("/storePost").get(authController.protect,
+  authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
+  postController.storePost);
 
-router.route("/create").get(postController.creatShow);
+router.route("/create").get(
+  // authController.protect,
+  // authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
+  postController.creatShow);
 
 router
   .route("/:id")
-  .patch(postController.updatepost)
-  .delete(postController.deletePost)
+  .patch(
+    // authController.protect,
+    // authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
+    postController.updatepost)
+  .delete(
+    // authController.protect,
+    // authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
+    postController.deletePost)
   .get(postController.getPost);
 
-router.route("/:id/edit").get(postController.editShow);
+router.route("/:id/edit").get(
+  // authController.protect,
+  // authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
+  postController.editShow);
 
 module.exports = router;

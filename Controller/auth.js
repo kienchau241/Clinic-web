@@ -48,6 +48,7 @@ exports.login = async (req, res) => {
       msg: "OK",
       data: { token },
     });
+    //return res.redirect('/')
   } catch (e) {
     console.error(e);
     res
@@ -141,6 +142,7 @@ exports.protect = async (req, res, next) => {
         code: 500,
         msg: e.toString(),
       });
+    
   }
   next();
 };

@@ -18,15 +18,38 @@ router
   )
   .post(courseController.createCourse);
 
-router.route("/create").get(courseController.createShow);
+router.route("/create").get(
+  // authController.protect,
+  // authController.restrictTo(
+  //   StaticData.AUTH.Role.admin,
+  //   StaticData.AUTH.Role.Doctor
+  // ),
+  courseController.createShow);
 
-router.route("/storeCourse").get(courseController.StoreCourseShow);
+router.route("/storeCourse").get(
+  // authController.protect,
+  // authController.restrictTo(
+  //   StaticData.AUTH.Role.admin,
+  //   StaticData.AUTH.Role.Doctor),
+  courseController.StoreCourseShow);
 
 router
   .route("/:id")
-  .patch(courseController.updateCourse)
+  .patch(
+    // authController.protect,
+    // authController.restrictTo(
+    //   StaticData.AUTH.Role.admin,
+    //   StaticData.AUTH.Role.Doctor
+    // ),
+    courseController.updateCourse)
   .get(courseController.getCoursebyID)
-  .delete(courseController.deleteCourse);
+  .delete(
+    // authController.protect,
+    // authController.restrictTo(
+    //   StaticData.AUTH.Role.admin,
+    //   StaticData.AUTH.Role.Doctor
+    // ),
+    courseController.deleteCourse);
 // router.route("/:name").get(courseController.getCoursebyName);
 
 router.route("/:id/edit").get(courseController.editShow);
