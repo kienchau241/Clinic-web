@@ -1,8 +1,9 @@
 const dbUtils = require("../utils/dbutils");
 const StaticData = require("../utils/StaticData");
 const dbconfig = require("../database/dbconfig");
-
+const ReviewDAO = require('./ReviewDAO');
 const TreatmentCSchema = require("../Model/TreatmentCourse");
+const ReviewSchema = require('../Model/Review');
 
 exports.getallCourse = async function (filter) {
   if (!dbconfig.db.pool) {
@@ -101,6 +102,8 @@ exports.deleteCourseById = async (id) => {
   if (!dbconfig.db.pool) {
     throw new Error("Not connected to db");
   }
+  await ReviewDAO.deleteReviewbyCourseId(id);
+
   let request = dbconfig.db.pool.request();
   let result = await request
     .input(

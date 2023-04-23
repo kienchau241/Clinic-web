@@ -54,11 +54,11 @@ exports.GetAllApp = async function (filter) {
 
 // GET APPOINTMENT BY ID
 exports.getAppByID = async function (id) {
-  if (!dbconfig.db.pool) {
+  if (!dbConfig.db.pool) {
     throw new Error("Not connected to db");
   }
 
-  let request = dbconfig.db.pool.request();
+  let request = dbConfig.db.pool.request();
   let result = await request
     .input(
       AppoinmentSchema.schema.idApp.name,
@@ -83,7 +83,7 @@ exports.createNewApp = async (appointment) => {
   }
   let now = new Date();
   appointment.createdAt = now.toISOString();
-  let insertData = TourSchema.validateData(appointment);
+  let insertData = AppoinmentSchema.validateData(appointment);
   let query = `insert into ${AppoinmentSchema.schemaName}`;
   const { request, insertFieldNamesStr, insertValuesStr } =
     dbUtils.getInsertQuery(

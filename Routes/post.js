@@ -12,8 +12,9 @@ router
     // authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
     postController.createPost);
 
-router.route("/storePost").get(authController.protect,
-  authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
+router.route("/storePost").get(
+  // authController.protect,
+  // authController.restrictTo(StaticData.AUTH.Role.admin,StaticData.AUTH.Role.Doctor),
   postController.storePost);
 
 router.route("/create").get(

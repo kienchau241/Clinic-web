@@ -67,6 +67,7 @@ exports.getReview = async function (id) {
   return null;
 };
 
+
 exports.getReviewByTourAndUser = async function (TreatmentId, userId) {
   if (!dbConfig.db.pool) {
     throw new Error("Not connected to db");
@@ -172,6 +173,21 @@ exports.deleteReview = async function (id) {
 
   return result.recordsets;
 };
+
+exports.deleteReviewbyCourseId = async function(courseid){
+  if (!dbConfig.db.pool) {
+    throw new Error("Not connected to db");
+  }
+
+  let result = await dbConfig.db.pool
+    .request()
+    .input(ReviewSchema.schema.TreatmentId.name, ReviewSchema.schema.TreatmentId.sqlType, courseid)
+    .query(
+      `delete ${ReviewSchema.schemaName} where ${ReviewSchema.schema.TreatmentId.name} = @${ReviewSchema.schema.TreatmentId.name}`
+    );
+
+  return result.recordsets;
+}
 
 exports.addReviewIfNotExisted = async function (review) {
   if (!dbConfig.db.pool) {
